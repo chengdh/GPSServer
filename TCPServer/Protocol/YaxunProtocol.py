@@ -274,7 +274,7 @@ class YaxunProtocol(protocol.Protocol):
       '''
       登陆确认
       '''
-      data = "\x7e\xfe\x13\x40\x12344455555 ok"
+      data = "\x7e\xfe\x13\x40\x05\x00\xff\xff\x00ok\x0d"
       self.transport.write(data)
 
     def frameReceived(self, data):
