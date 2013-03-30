@@ -33,3 +33,7 @@
 2013-03-30 11:44:41+0800 [-] Starting factory <Factory.YaxunServerFactory.YaxunFactory instance at 0x109049440>
 2013-03-30 11:45:11+0800 [-] start
 2013-03-30 11:45:11+0800 [-] {'Yaxun': {'enable': True, 'serverPort': 9008, 'mysqlHost': 'localhost', 'mysqlUser': 'root', 'db': 'myPythonServerTestdb', 'factory': <Factory.YaxunServerFactory.YaxunFactory instance at 0x1093f8878>, 'unpn_history': 'unpnhis', 'mysqlPasswd': 'antongroot'}}
+2013-03-30 13:12:17+0800 [-] Received SIGINT, shutting down.
+2013-03-30 13:12:17+0800 [Factory.YaxunServerFactory.YaxunFactory] (TCP Port 9008 Closed)
+2013-03-30 13:12:17+0800 [Factory.YaxunServerFactory.YaxunFactory] Stopping factory <Factory.YaxunServerFactory.YaxunFactory instance at 0x109049440>
+2013-03-30 13:12:17+0800 [-] Main loop terminated.

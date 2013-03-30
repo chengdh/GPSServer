@@ -264,8 +264,16 @@ class YaxunProtocol(protocol.Protocol):
         frame_no = data[3]
         if frame_no == '\x20':
           log.msg("this is logiin")
+          accept_login()
         if frame_no == '\x21':
           log.msg('this is sended gps info')
+    
+    def accept_login(self):
+      '''
+      登陆确认
+      '''
+      data = "\x7e\xfe\x13\x40\x12344455555 ok"
+      self.transport.write(data)
 
     def frameReceived(self, data):
         data = data.replace("\x7d\x00", "\x7d").replace("\x7d\x01", "\x7e")
