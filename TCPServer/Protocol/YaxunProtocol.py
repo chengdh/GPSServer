@@ -272,7 +272,7 @@ class YaxunProtocol(protocol.Protocol):
     
     def accept_login(self):
       '''
-      登陆确认
+      登录确认
       '''
       data = "\x7e\xfe\x13\x40\x05\x00\xff\xff\x00ok\x0d"
       self.transport.write(data)
