@@ -27,4 +27,4 @@ pip-log.txt
 .mr.developer.cfg
 .DS_Store
 *.sw[po]
-TCPServer/log/
+TCPServer/log/sysLog.log
