@@ -185,13 +185,14 @@ def yaxun_coordinate(c):
 class YaxunProtocol(protocol.Protocol):
     
     #databuffer为缓冲区
-    databuffer = ""
+    databuffer = ''
     timeOut=330
     timeout_deferred=None
     #当前连接设备id
     epidCurrent=None
     
     connected=False
+
     def __init__(self, factory):
         self.factory = factory
     
@@ -237,6 +238,9 @@ class YaxunProtocol(protocol.Protocol):
         if self.timeout_deferred:  
             self.timeout_deferred.cancel()  
             self.timeout_deferred = reactor.callLater(self.timeOut, self.timeout)  
+
+        '''
+        暂时注释,只处理一帧的情况
  
         self.databuffer += data
 
@@ -252,9 +256,12 @@ class YaxunProtocol(protocol.Protocol):
 
             self.frameReceived(self.databuffer[1:pos])
             self.databuffer = self.databuffer[pos + 1:]
+        '''
+        self.frameReceived(data[1:])
 
     def frameReceived(self, data):
         data = data.replace("\x7d\x00", "\x7d").replace("\x7d\x01", "\x7e")
+        log.msg('in frameReceived data = %s' % repr(data))
         # 忽略校验和，好像设备上传的校验和不对
         version, checksum, priority, cmdno = map(ord, data[:4])
         data = data[4:]
