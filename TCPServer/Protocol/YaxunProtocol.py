@@ -257,7 +257,15 @@ class YaxunProtocol(protocol.Protocol):
             self.frameReceived(self.databuffer[1:pos])
             self.databuffer = self.databuffer[pos + 1:]
         '''
-        self.frameReceived(data[1:])
+        self.parse_data(data)
+
+    def  parse_data(self,data):
+        #判断帧号
+        frame_no = data[3]
+        if frame_no == '\x20':
+          log.msg("this is logiin")
+        if frame_no == '\x21':
+          log.msg('this is sended gps info')
 
     def frameReceived(self, data):
         data = data.replace("\x7d\x00", "\x7d").replace("\x7d\x01", "\x7e")
