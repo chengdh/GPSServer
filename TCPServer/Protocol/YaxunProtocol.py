@@ -232,7 +232,8 @@ class YaxunProtocol(protocol.Protocol):
  
     
     def dataReceived(self, data):
-        log.msg("dataReceived = %s" % " ".join(["%02x" % c for c in bytearray(data)]))
+        log.msg("dataReceived format = %s" % " ".join(["%02x" % c for c in bytearray(data)]))
+        log.msg("dataReceived = %s" % repr(data))
 
         #重置超时设置
         if self.timeout_deferred:  
@@ -262,6 +263,7 @@ class YaxunProtocol(protocol.Protocol):
     def  parse_data(self,data):
         #判断帧号
         frame_no = data[3]
+        log.msg("frame no=%s" % repr(frame_no))
         if frame_no == '\x20':
           log.msg("this is login")
           self.accept_login()
