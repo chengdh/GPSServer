@@ -263,7 +263,7 @@ class YaxunProtocol(protocol.Protocol):
         #判断帧号
         frame_no = data[3]
         if frame_no == '\x20':
-          log.msg("this is logiin")
+          log.msg("this is login")
           accept_login()
         if frame_no == '\x21':
           log.msg('this is sended gps info')
