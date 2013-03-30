@@ -1,5 +1,5 @@
 #coding=utf-8
-from Factory import TianHeServerFactory,YouWeiServerFactory
+from Factory import TianHeServerFactory,YouWeiServerFactory,YaxunServerFactory
 
 dic={}
 #请按照配置文档说明配置 不要试图写入错误的值
@@ -13,6 +13,8 @@ dic={}
 gpsTableClearTime=1
 almTableClearTime=1
 #------------------------------------------------------------------------#
+'''
+暂时注释
 dic['TianHe']={ 'serverPort':9008,
     'factory':TianHeServerFactory.TianHeFactory(),
     'mysqlHost':'localhost',
@@ -31,4 +33,12 @@ dic['YouWei']={ 'serverPort':6969,
     'db':'myPythonServerTestdb',
     'unpn_history':'unpnhis',
     'enable':False}
-
+'''
+dic['Yaxun']={ 'serverPort':9008,
+    'factory':YaxunServerFactory.YaxunFactory(),
+    'mysqlHost':'localhost',
+    'mysqlUser':'root',
+    'mysqlPasswd':'antongroot',
+    'db':'myPythonServerTestdb',
+    'unpn_history':'unpnhis',
+    'enable':True}
