@@ -12,18 +12,6 @@ import time
 
 ST_3746 = struct.Struct(">BBBIHB 3B3B H 4s4s BB BHBB")
 
-def get_utc_seconds():
-  """
-  获取utc时间,并格式化
-  """
-  now_tuple = datetime.datetime.now().timetuple()
-  ret = "%x" % time.mktime(now_tuple)
-  ret_array = [ret[0:2],ret[2:4],ret[4:6],ret[6:8]]
-  ret_str = "".join(["\\x%s" % c for c in ret_array])
-  return ret_str
-
-
-#以下定义一些通用函数
 if True:
     yaxun_ord = ord
     yaxun_7to8 = lambda s: s
@@ -280,18 +268,34 @@ class YaxunProtocol(protocol.Protocol):
           self.accept_login()
         if frame_no == '\x21':
           log.msg('this is sended gps info')
+          self.parse_gps_info(data)
     
     def accept_login(self):
       '''
       登录确认
       '''
-      data = "\x7e\xfe\x13\x40\x05\x00\xff\xff\x00ok\x0d"
+      hex_utc_timestamp = "%x" % time.mktime(datetime.datetime.now().timetuple())
+
+      #data = "\x7e\xfe\x13\x40\x05\x00\xff\xff\x00\x0d"
+      data = "\x7e\xfe\x13\x40\x0b" + hex_utc_timestamp + "welcome\x0d"
+      log.msg("accept_login")
       self.transport.write(data)
 
     def parse_gps_info(self,data):
       '''
       解析gps位置数据信息
       '''
+      #|7E|FE|版本1|帧号1|帧数据长度2|utc时间（4位)|纬度4|经度4|方向2|速度2|累计里程4
+      gps_info = {
+          'utc_time' :data[6:10] ,
+          'lat' :     data[10:14], 
+          'lon' :     data[14:18],
+          'direction':data[18:20],
+          'speed':    data[20:22],
+          'milles' :  data[22:],
+          }
+      log.msg('parse gps info = %s' % repr(gps_info))
+      return gps_info
 
     def frameReceived(self, data):
         data = data.replace("\x7d\x00", "\x7d").replace("\x7d\x01", "\x7e")
