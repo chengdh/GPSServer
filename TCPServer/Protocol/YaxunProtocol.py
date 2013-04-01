@@ -12,6 +12,17 @@ import time
 
 ST_3746 = struct.Struct(">BBBIHB 3B3B H 4s4s BB BHBB")
 
+def get_utc_seconds():
+  """
+  获取utc时间,并格式化
+  """
+  now_tuple = datetime.datetime.now().timetuple()
+  ret = "%x" % time.mktime(now_tuple)
+  ret_array = [ret[0:2],ret[2:4],ret[4:6],ret[6:8]]
+  ret_str = "".join(["\\x%s" % c for c in ret_array])
+  return ret_str
+
+
 #以下定义一些通用函数
 if True:
     yaxun_ord = ord
@@ -276,6 +287,11 @@ class YaxunProtocol(protocol.Protocol):
       '''
       data = "\x7e\xfe\x13\x40\x05\x00\xff\xff\x00ok\x0d"
       self.transport.write(data)
+
+    def parse_gps_info(self,data):
+      '''
+      解析gps位置数据信息
+      '''
 
     def frameReceived(self, data):
         data = data.replace("\x7d\x00", "\x7d").replace("\x7d\x01", "\x7e")
