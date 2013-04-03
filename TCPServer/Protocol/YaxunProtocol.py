@@ -274,7 +274,8 @@ class YaxunProtocol(protocol.Protocol):
       '''
       登录确认
       '''
-      data = "\x7e\xfe\x13\x40\x05\x01\x0f\x0f\x01ok\x0d"
+      #data = "\x7e\xfe\x13\x40\x05\x01\x0f\x0f\x01ok\x0d"
+      data = "\x7e\xfe\x13\x40\x051364970140\x00ok\x0d"
       #data = "\x7e\xfe\x13\x40\x0b" + hex_utc_timestamp + "welcome\x0d"
       log.msg("accept_login")
       self.transport.write(data)
