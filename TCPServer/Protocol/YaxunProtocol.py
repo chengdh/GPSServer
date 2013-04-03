@@ -279,6 +279,8 @@ class YaxunProtocol(protocol.Protocol):
         if frame_no == '\x21':
           log.msg('this is sended gps info')
           self.parse_gps_info(data)
+        if frame_no == '\x24':
+          log.msg('this is set heart')
     
     def accept_login(self):
       '''
