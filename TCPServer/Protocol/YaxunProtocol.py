@@ -288,7 +288,7 @@ class YaxunProtocol(protocol.Protocol):
       utc_seconds = int(time.mktime(datetime.datetime.now().timetuple()))
       #data = "\x7e\xfe\x13\x40\x06"+convert(utc_seconds)+"ok\x0d"
       #data = "\x7e\xfe\x13\x40\x0b" + hex_utc_timestamp + "welcome\x0d"
-      data = "\x7e\xfe\x13\x40\x07\x9c\xca\x5b\x51\x00ok\x0d"
+      data = "\x7e\xfe\x13\x40\x07\x01\x0f\x0f\x01\x00ok\x0d"
       log.msg("accept_login")
       self.transport.write(data)
 
