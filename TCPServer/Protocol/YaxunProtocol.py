@@ -294,13 +294,13 @@ class YaxunProtocol(protocol.Protocol):
       utc_time = "\x9c\xca\x5b\x51"
       msg = "welcome"
 
-      frame_length = yaxun_checksum(sum(bytearray(utc_time + msg)))
       data=''.join([
         "\x7e",
         "\xfe",
         "\x13",
         "\x40",
-        chr(frame_length),
+        "\x00",
+        "\x0b",
         utc_time,
         msg,
         '\x0d',
