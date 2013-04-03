@@ -303,7 +303,7 @@ class YaxunProtocol(protocol.Protocol):
         chr(frame_length),
         utc_time,
         msg,
-        '0d',
+        '\x0d',
         ])
       log.msg("send data = %s" % repr(data))
       self.transport.write(data)
