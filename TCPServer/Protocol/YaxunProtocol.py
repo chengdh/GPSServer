@@ -11,6 +11,16 @@ import time
 
 
 ST_3746 = struct.Struct(">BBBIHB 3B3B H 4s4s BB BHBB")
+def convert(int_value):
+    """
+    将整数转换为16进制字符串
+    """
+    encoded = format(int_value, 'x')
+
+    length = len(encoded)
+    encoded = encoded.zfill(length+length%2)
+
+    return encoded.decode('hex')
 
 if True:
     yaxun_ord = ord
@@ -275,7 +285,8 @@ class YaxunProtocol(protocol.Protocol):
       登录确认
       '''
       #data = "\x7e\xfe\x13\x40\x05\x01\x0f\x0f\x01ok\x0d"
-      data = "\x7e\xfe\x13\x40\x051364970140\x00ok\x0d"
+      utc_seconds = int(time.mktime(datetime.now().timetuple()))
+      data = "\x7e\xfe\x13\x40\x06"+convert(utc_seconds)+"ok\x0d"
       #data = "\x7e\xfe\x13\x40\x0b" + hex_utc_timestamp + "welcome\x0d"
       log.msg("accept_login")
       self.transport.write(data)
