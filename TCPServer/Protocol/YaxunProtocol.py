@@ -291,6 +291,21 @@ class YaxunProtocol(protocol.Protocol):
       #data = "\x7e\xfe\x13\x40\x05\x01\x0f\x0f\x01ok\x0d"
       data = "\x7e\xfe\x13\x40\x08\x9c\xca\x5b\x51\x0d"
       log.msg("accept_login")
+      utc_time = "\x9c\xca\x5b\x51"
+      msg = "welcome"
+
+      frame_length = yaxun_checksum(sum(bytearray(utc_time + msg)))
+      data=''.join([
+        "\x7e",
+        "\xfe",
+        "\x13",
+        "\x40",
+        chr(frame_length),
+        utc_time,
+        msg,
+        '0d',
+        ])
+      log.msg("send data = %s" % repr(data))
       self.transport.write(data)
 
     def parse_gps_info(self,data):
