@@ -292,7 +292,7 @@ class YaxunProtocol(protocol.Protocol):
       data = "\x7e\xfe\x13\x40\x08\x9c\xca\x5b\x51\x0d"
       log.msg("accept_login")
       utc_time = "\x9c\xca\x5b\x51"
-      utc_time = "\x01\x0f\x0f\x01"
+      #utc_time = "\x01\x0f\x0f\x01"
       msg = "welcome"
 
       data=''.join([
