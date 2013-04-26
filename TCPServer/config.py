@@ -13,8 +13,6 @@ dic={}
 gpsTableClearTime=1
 almTableClearTime=1
 #------------------------------------------------------------------------#
-'''
-暂时注释
 dic['TianHe']={ 'serverPort':9008,
     'factory':TianHeServerFactory.TianHeFactory(),
     'mysqlHost':'localhost',
@@ -42,3 +40,4 @@ dic['Yaxun']={ 'serverPort':9008,
     'db':'myPythonServerTestdb',
     'unpn_history':'unpnhis',
     'enable':True}
+'''
