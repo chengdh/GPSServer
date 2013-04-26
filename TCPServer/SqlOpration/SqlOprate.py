@@ -137,7 +137,7 @@ def sqlInsert_ep(key,value):
                 bankno=math.floor(count)
                 v=(bankno,0,0,0)
                 value=value+v
-                sql="insert ignore into ep(epid,devtype,bankno,name,dept_id,creator_id) values(%s,%s,'%s',%s,%s,%s,%s)"%value[1:]
+                sql="insert ignore into ep(epid,devtype,bankno,name,dept_id,creator_id) values(%s,'%s',%s,%s,%s,%s)"%value[1:]
                 cursor.execute(sql)
                 conn.commit()
                 b=int(bankno)
@@ -153,7 +153,7 @@ def sqlInsert_epstat(key,value):
             cursor=dic['mysqlCursor']
             conn=dic['mysqlConnection']
             if conn and cursor:
-              sql= "insert into epstat(epid,`time`,`state`,`desc`,gpstime,longitude,latitude,direction,speed,mileage,flags) values(%s,%s,'%s',0,'在线','%s',%s,%s,%s,%s,%s,'%s') on DUPLICATE KEY UPDATE `time`='%s',gpstime='%s',`state`=0,`desc`='在线',longitude=%s,latitude=%s,direction=%s,speed=%s,mileage=%s,flags='%s'" % value[1:]
+              sql= "insert into epstat(epid,`time`,`state`,`desc`,gpstime,longitude,latitude,direction,speed,mileage,flags) values(%s,'%s',0,'在线','%s',%s,%s,%s,%s,%s,'%s') on DUPLICATE KEY UPDATE `time`='%s',gpstime='%s',`state`=0,`desc`='在线',longitude=%s,latitude=%s,direction=%s,speed=%s,mileage=%s,flags='%s'" % value[1:]
               cursor.execute(sql)
               conn.commit()
 
@@ -180,7 +180,7 @@ def sqlUpdate_epstatConnecting(key,value):
             cursor=dic['mysqlCursor']
             conn=dic['mysqlConnection']
             if conn and cursor:
-              sql= "insert into epstat(epid,`time`,`state`,`desc`,gpstime,longitude,latitude,direction,speed,mileage,flags) values(%s,%s,'%s',0,'在线','%s',%s,%s,%s,%s,%s,'%s') on DUPLICATE KEY UPDATE `time`='%s',gpstime='%s',`state`=0,`desc`='在线',longitude=%s,latitude=%s,direction=%s,speed=%s,mileage=%s,flags='%s'"%value[1:]
+              sql= "insert into epstat(epid,`time`,`state`,`desc`,gpstime,longitude,latitude,direction,speed,mileage,flags) values(%s,'%s',0,'在线','%s',%s,%s,%s,%s,%s,'%s') on DUPLICATE KEY UPDATE `time`='%s',gpstime='%s',`state`=0,`desc`='在线',longitude=%s,latitude=%s,direction=%s,speed=%s,mileage=%s,flags='%s'"%value[1:]
               cursor.execute(sql)
               conn.commit()
     except MySQLdb.Error,e:
