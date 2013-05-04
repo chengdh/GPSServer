@@ -176,19 +176,14 @@ def main():
     #f = logfile.DailyLogFile("dailylog", "./log")
     #log.startLogging(f)
     for key in config.dic:
-    
         dic=config.dic[key]
         if dic and dic['enable']:
             factory=dic['factory']
-            SqlOprate.sqlUnpnConnect(key,dic)
-            SqlOprate.sqlUnpnhisConnect(key,dic)
             if factory and not serverPortRepeate(key,dic['serverPort']):
                 iPort= reactor.listenTCP(dic['serverPort'], factory)
                 lastPortDic[key]=iPort
                 lastDic[key]=dic
     
-
-    reactor.callLater(30,update)
     reactor.run()
 
 main()
