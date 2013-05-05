@@ -6,7 +6,6 @@ from twisted.plugin import IPlugin
 from twisted.application.service import IServiceMaker
 from twisted.application import internet
 
-from TCPServer.Factory.simple_factory import  SimpleFactory 
 import TCPServer.SqlOpration.SqlOprate  as SqlOprate
 import TCPServer.config as global_config
 
@@ -30,7 +29,7 @@ class GPSServiceMaker(object):
         """
 
         self.connect_db(options['factory_key'])
-        return internet.TCPServer(int(options['port']), global_config[options['factory_key']])
+        return internet.TCPServer(int(options['port']), global_config.dic[options['factory_key']])
 
     def connect_db(self,factory_key):
       '''
