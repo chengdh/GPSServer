@@ -5,7 +5,8 @@ from twisted.python import usage
 from twisted.plugin import IPlugin
 from twisted.application.service import IServiceMaker
 from twisted.application import internet
-
+from twisted.internet import protocol, pollreactor
+pollreactor.install()
 import TCPServer.SqlOpration.SqlOprate  as SqlOprate
 import TCPServer.config as global_config
 
