@@ -1,0 +1,59 @@
+#!/bin/bash
+
+USER=chengdh
+
+REACTOR=epoll
+
+NAME=$2
+NO=$3
+PORT=$4
+HOME=$(dirname $0)
+
+if [ "PORT" == "" ]; then
+  PORT=5000
+fi
+
+cd $HOME
+echo "home: $(pwd)"
+
+RUNDIR=var/run
+LOGDIR=var/log
+
+[ -d $RUNDIR ] || mkdir -p $RUNDIR
+[ -d $LOGDIR ] || mkdir -p $LOGDIR
+
+chown $USER: $RUNDIR $LOGDIR
+
+TWISTD=/usr/bin/twistd
+
+if [ "$NO" != "" ]; then
+	NAMENO=$NAME.$NO
+else
+	NAMENO=$NAME
+fi
+
+PIDFILE=$RUNDIR/$NAMENO.pid
+LOGFILE=$LOGDIR/$NAMENO.log
+
+case $1 in
+    start)
+        echo -n "Starting $NAMENO ... "
+        start-stop-daemon --start --quiet --chuid $USER --chdir $HOME --exec $TWISTD --\
+            --umask 0022 --reactor=$REACTOR --pidfile=$PIDFILE --logfile=$LOGFILE gps_server \
+            --factory_key=$NAME --port=$PORT
+        [ "$?" = "0" ] && echo [ok] || echo [error]
+        ;;
+    stop)
+        echo -n "Stoping $NAMENO ... "
+        start-stop-daemon --stop --pidfile=$PIDFILE
+        [ "$?" = "0" ] && echo [ok] || echo [error]
+        ;;
+    restart)
+        $0 stop $NAME $NO
+        $0 start $NAME $NO
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac

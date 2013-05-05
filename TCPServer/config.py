@@ -14,7 +14,7 @@ dic={}
 gpsTableClearTime=1
 almTableClearTime=1
 #------------------------------------------------------------------------#
-dic['simple_test']={ 'serverPort':5010,
+dic['simple_factory']={ 'serverPort':5010,
     'factory':simple_factory.SimpleFactory(),
     'mysqlHost':'localhost',
     'mysqlUser':'root',
