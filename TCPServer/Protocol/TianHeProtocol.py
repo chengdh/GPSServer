@@ -1,5 +1,5 @@
 # encoding:utf-8
-from twisted.internet import protocol, reactor
+from twisted.internet import protocol
 from twisted.protocols import basic, policies
 from twisted.python import log
 import MySQLdb
