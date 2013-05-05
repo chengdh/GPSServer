@@ -28,7 +28,7 @@ class GPSServiceMaker(object):
         """
 
         self.connect_db(options['factory_key'])
-        return internet.TCPServer(int(options['port']), global_config.dic[options['factory_key']])
+        return internet.TCPServer(int(options['port']), global_config.dic[options['factory_key']]['factory'])
 
     def connect_db(self,factory_key):
       '''
