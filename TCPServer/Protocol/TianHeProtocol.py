@@ -1,10 +1,11 @@
 # encoding:utf-8
 from twisted.internet import protocol, reactor
+from twisted.protocols import basic, policies
 from twisted.python import log
 import MySQLdb
 import datetime
 import struct
-from SqlOpration import SqlOprate 
+from TCPServer.SqlOpration import SqlOprate 
 
 TD_8HOUR = datetime.timedelta(0, 28800)
 
@@ -23,7 +24,7 @@ def bin(number):
     s = number
     return ''.join(m[x] for x in s)
 
-class TianHeProtocol(protocol.Protocol):
+class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutMixin):
     timeOut=330
     timeout_deferred=None
     epidCurrent=None

@@ -28,3 +28,6 @@ pip-log.txt
 .DS_Store
 *.sw[po]
 TCPServer/log/sysLog.log
+*.log
+*.pid
+*.cache

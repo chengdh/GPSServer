@@ -1,6 +1,6 @@
 #coding=utf-8
 from SuperServerFactory import SuperFactory
-from Protocol.TianHeProtocol import TianHeProtocol
+from TCPServer.Protocol.TianHeProtocol import TianHeProtocol
 
 class TianHeFactory(SuperFactory):
     factoryKey='TianHe'

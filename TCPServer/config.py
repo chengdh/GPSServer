@@ -1,5 +1,6 @@
 #coding=utf-8
-from Factory import simple_factory,TianHeServerFactory,YouWeiServerFactory,YaxunServerFactory
+from TCPServer.Factory import simple_factory,TianHeServerFactory
+#,YouWeiServerFactory,YaxunServerFactory
 
 dic={}
 #请按照配置文档说明配置 不要试图写入错误的值
@@ -23,7 +24,6 @@ dic['simple_test']={ 'serverPort':5010,
     'enable':True}
 
 
-'''
 dic['TianHe']={ 'serverPort':9008,
     'factory':TianHeServerFactory.TianHeFactory(),
     'mysqlHost':'localhost',
@@ -33,6 +33,7 @@ dic['TianHe']={ 'serverPort':9008,
     'unpn_history':'unpnhis',
     'enable':True}
 
+'''
 
 dic['YouWei']={ 'serverPort':6969,
     'factory':YouWeiServerFactory.YouWeiFactory(),
