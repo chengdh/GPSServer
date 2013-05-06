@@ -14,7 +14,7 @@ gpsTableClearTime=1
 almTableClearTime=1
 #------------------------------------------------------------------------#
 dic['simple_factory']={ 'serverPort':5010,
-    'factory': "simple_factory.SimpleFactory()",
+    'factory': "SimpleFactory()",
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
@@ -24,7 +24,7 @@ dic['simple_factory']={ 'serverPort':5010,
 
 
 dic['TianHe']={ 'serverPort':5010,
-    'factory': "TianHeServerFactory.TianHeFactory()",
+    'factory': "TianHeFactory()",
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
@@ -33,7 +33,7 @@ dic['TianHe']={ 'serverPort':5010,
     'enable':True}
 
 dic['test']={ 'serverPort':6000,
-    'factory': "TianHeServerFactory.TianHeFactory()",
+    'factory': "TianHeFactory()",
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
