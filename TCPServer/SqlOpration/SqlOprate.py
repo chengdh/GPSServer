@@ -1,9 +1,11 @@
 #coding=utf-8
 from twisted.python import log
+import sys
 import MySQLdb
 import datetime
 import math
-from .. import config as global_config
+sys.path.append("etc")
+import config as global_config
 
 SQL_Connection={}
 HistroySQL_Connection={}

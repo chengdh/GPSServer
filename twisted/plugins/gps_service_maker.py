@@ -1,11 +1,15 @@
 #coding=utf-8
+import sys
 from zope.interface import implements
-
 from twisted.python import usage
 from twisted.plugin import IPlugin
 from twisted.application.service import IServiceMaker
 from twisted.application import internet
-from TCPServer import config as global_config
+
+#加入etc/目录
+sys.path.append("etc")
+import config as global_config
+
 
 
 class Options(usage.Options):
@@ -26,7 +30,7 @@ class GPSServiceMaker(object):
         Construct a TCPServer from a factory defined in myproject.
         """
 
-        return internet.TCPServer(int(options['port']), global_config.dic[options['factory_key']]['factory'])
+        return internet.TCPServer(int(options['port']),eval(global_config.dic[options['factory_key']]['factory']))
 
 # Now construct an object which *provides* the relevant interfaces
 # The name of this variable is irrelevant, as long as there is *some*
