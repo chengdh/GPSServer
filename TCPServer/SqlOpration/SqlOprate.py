@@ -3,6 +3,7 @@ from twisted.python import log
 import MySQLdb
 import datetime
 import math
+from .. import config as global_config
 
 SQL_Connection={}
 HistroySQL_Connection={}
