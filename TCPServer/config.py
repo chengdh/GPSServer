@@ -24,7 +24,7 @@ dic['simple_factory']={ 'serverPort':5010,
     'enable':True}
 
 
-dic['TianHe']={ 'serverPort':9008,
+dic['TianHe']={ 'serverPort':5010,
     'factory':TianHeServerFactory.TianHeFactory(),
     'mysqlHost':'localhost',
     'mysqlUser':'root',
@@ -33,6 +33,14 @@ dic['TianHe']={ 'serverPort':9008,
     'unpn_history':'unpnhis',
     'enable':True}
 
+dic['test']={ 'serverPort':6000,
+    'factory':TianHeServerFactory.TianHeFactory(),
+    'mysqlHost':'localhost',
+    'mysqlUser':'root',
+    'mysqlPasswd':'antongroot',
+    'db':'test',
+    'unpn_history':'testhis',
+    'enable':True}
 '''
 
 dic['YouWei']={ 'serverPort':6969,
