@@ -4,7 +4,7 @@ from twisted.python import log
 import MySQLdb
 import datetime
 import struct
-from SqlOpration import SqlOprate 
+from TCPServer.SqlOpration import SqlOprate 
 
 TD_8HOUR = datetime.timedelta(0, 28800)
 

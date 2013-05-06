@@ -1,6 +1,6 @@
 #coding=utf-8
 from SuperServerFactory import SuperFactory
-from Protocol.YouWeiProtocol import YouWeiProtocol
+from TCPServer.Protocol.YouWeiProtocol import YouWeiProtocol
 
 class YouWeiFactory(SuperFactory):
     factoryKey='YouWei'
