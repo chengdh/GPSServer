@@ -96,6 +96,7 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
             
             value=('NULL',data[1],'TianHe')
             
+            log.msg("insert a new ep : %s" % data[1])
             SqlOprate.sqlInsert_ep(self.factory.factoryKey,value)
             
             
@@ -182,11 +183,14 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
                 now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S") 
                 value=('NULL',data[1],now,t,jingdu,weidu,direction,speed,0,state)
                 value=value+value[2:]
+
+                log.msg("insert epstat : %s" % data[1])
                 SqlOprate.sqlInsert_epstat(self.factory.factoryKey,value)
             else:
                 now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
                 value=('NULL',data[1],now,t,data[5],data[7],direction,speed,0,state)
                 value=value+value[2:]
+                log.msg("insert epstat : %s" % data[1])
                 SqlOprate.sqlInsert_epstat(self.factory.factoryKey,value)
             
     
