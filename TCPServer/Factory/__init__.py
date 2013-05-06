@@ -1,3 +1,0 @@
-import simple_factory
-import TianHeServerFactory
-import YouWeiServerFactory
