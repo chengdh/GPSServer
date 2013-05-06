@@ -38,7 +38,7 @@ dic['test']={ 'serverPort':6000,
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
-    'db':'test',
+    'db':'unpn_test',
     'unpn_history':'testhis',
     'enable':True}
 '''
