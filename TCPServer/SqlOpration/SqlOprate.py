@@ -78,18 +78,23 @@ def get_connection(key,history_db=False):
   '''
   try:
     conn = cursor = dic = None;
-    if key not in SQL_Connection:
-      cfg = global_config.dic[key]
-      if history_db:
+    cfg = global_config.dic[key]
+    if history_db:
+      if key not in HistorySQL_Connection:
         sqlUnpnhisConnect(key,cfg)
-        dic=HistroySQL_Connection[key]   
-        conn=dic['mysqlHisConnection']
-        cursor=dic['mysqlHisCursor']
-      else:
+    else:
+      if key not in SQL_Connection:
         sqlUnpnConnect(key,cfg)
-        dic=SQL_Connection[key]
-        conn=dic['mysqlConnection']
-        cursor=dic['mysqlCursor']
+      
+    if history_db:
+      dic=HistroySQL_Connection[key]   
+      conn=dic['mysqlHisConnection']
+      cursor=dic['mysqlHisCursor']
+    else:
+      dic=SQL_Connection[key]
+      conn=dic['mysqlConnection']
+      cursor=dic['mysqlCursor']
+
     #ret
     return (conn,cursor)
 
