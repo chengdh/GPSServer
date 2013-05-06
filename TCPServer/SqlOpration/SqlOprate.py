@@ -68,7 +68,7 @@ def sqlLostUnpnhisConnect(key,connection,cursor):
         log.err()
 
 #获取db的连接
-def get_cnnection(key,history_db=False):
+def get_connection(key,history_db=False):
   '''
   连接数据库
   @param history_db 是否连接历史库
