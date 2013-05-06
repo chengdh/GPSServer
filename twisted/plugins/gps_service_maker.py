@@ -5,7 +5,7 @@ from twisted.python import usage
 from twisted.plugin import IPlugin
 from twisted.application.service import IServiceMaker
 from twisted.application import internet
-from TCPServer.Factory import *
+import TCPServer.Factory
 
 #加入etc/目录
 sys.path.append("etc")
