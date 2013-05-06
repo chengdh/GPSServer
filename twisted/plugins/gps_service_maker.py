@@ -5,7 +5,7 @@ from twisted.python import usage
 from twisted.plugin import IPlugin
 from twisted.application.service import IServiceMaker
 from twisted.application import internet
-import TCPServer.config as global_config
+from TCPServer import config as global_config
 
 
 class Options(usage.Options):
