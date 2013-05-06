@@ -80,7 +80,7 @@ def get_connection(key,history_db=False):
     conn = cursor = dic = None;
     cfg = global_config.dic[key]
     if history_db:
-      if key not in HistorySQL_Connection:
+      if key not in HistroySQL_Connection:
         sqlUnpnhisConnect(key,cfg)
     else:
       if key not in SQL_Connection:
