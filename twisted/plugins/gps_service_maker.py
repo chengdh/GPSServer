@@ -32,7 +32,9 @@ class GPSServiceMaker(object):
         """
 
         factory_key = options['factory_key']
-        return internet.TCPServer(int(options['port']),eval(global_config.dic[options['factory_key']]['factory']))
+        factory_object = eval(global_config.dic[options['factory_key']]['factory'])
+        factory_object.factory_key = factory_key
+        return internet.TCPServer(int(options['port']),factory_object)
 
 # Now construct an object which *provides* the relevant interfaces
 # The name of this variable is irrelevant, as long as there is *some*
