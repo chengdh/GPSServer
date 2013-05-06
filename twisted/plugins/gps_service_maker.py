@@ -5,7 +5,7 @@ from twisted.python import usage
 from twisted.plugin import IPlugin
 from twisted.application.service import IServiceMaker
 from twisted.application import internet
-import TCPServer.Factory
+from TCPServer.Factory import *
 
 #加入etc/目录
 sys.path.append("etc")
@@ -31,6 +31,7 @@ class GPSServiceMaker(object):
         Construct a TCPServer from a factory defined in myproject.
         """
 
+        factory_key = options['factory_key']
         return internet.TCPServer(int(options['port']),eval(global_config.dic[options['factory_key']]['factory']))
 
 # Now construct an object which *provides* the relevant interfaces
