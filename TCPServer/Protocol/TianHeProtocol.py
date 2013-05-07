@@ -5,7 +5,7 @@ from twisted.python import log
 import MySQLdb
 import datetime
 import struct
-#from TCPServer.SqlOpration import SqlOprate 
+from TCPServer.SqlOpration import SqlOprate 
 
 TD_8HOUR = datetime.timedelta(0, 28800)
 
@@ -69,7 +69,7 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
             log.msg(self.epidCurrent+"--timeout")
             now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
             value=(now,self.epidCurrent)
-            #SqlOprate.sqlUpdate_epstatLost(self.factory.factoryKey,value)
+            SqlOprate.sqlUpdate_epstatLost(self.factory.factoryKey,value)
         self.transport.loseConnection()
     
     def connectionLost(self, reason):
@@ -97,7 +97,7 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
             value=('NULL',data[1],'TianHe')
             
             log.msg("insert a new ep : %s" % data[1])
-            #SqlOprate.sqlInsert_ep(self.factory.factoryKey,value)
+            SqlOprate.sqlInsert_ep(self.factory.factoryKey,value)
             
             
             if data[2]=='V1' and self.connected:
@@ -178,20 +178,20 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
                 for d in range(0,len(discrubes)):
                     now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
                     value=('NULL',data[1],now,'NULL',alerType[d],discrubes[d],t,jingdu,weidu,direction,speed,0,state)
-                    #SqlOprate.sqlInsert_alm(self.factory.factoryKey,value)
+                    SqlOprate.sqlInsert_alm(self.factory.factoryKey,value)
                 
                 now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S") 
                 value=('NULL',data[1],now,t,jingdu,weidu,direction,speed,0,state)
                 value=value+value[2:]
 
                 log.msg("insert epstat : %s" % data[1])
-                #SqlOprate.sqlInsert_epstat(self.factory.factoryKey,value)
+                SqlOprate.sqlInsert_epstat(self.factory.factoryKey,value)
             else:
                 now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
                 value=('NULL',data[1],now,t,data[5],data[7],direction,speed,0,state)
                 value=value+value[2:]
                 log.msg("insert epstat : %s" % data[1])
-                #SqlOprate.sqlInsert_epstat(self.factory.factoryKey,value)
+                SqlOprate.sqlInsert_epstat(self.factory.factoryKey,value)
             
     
     #解析$开头的2进制数据
@@ -210,13 +210,13 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
                 #print(value)
                 if value[4]!=0 and value[5]!=0:
                     print(value)
-                    #SqlOprate.sqlInsert_gps(self.factory.factoryKey,value)
+                    SqlOprate.sqlInsert_gps(self.factory.factoryKey,value)
                 
                 if insetOrUpate:
                     if len(data[end-i])==31:
                         value=self.binaryCommandTransport(data[end-i])
                         value=value+value[2:]
-                        #SqlOprate.sqlUpdate_epstatConnecting(self.factory.factoryKey,value)
+                        SqlOprate.sqlUpdate_epstatConnecting(self.factory.factoryKey,value)
                         insetOrUpate=False
     
     
