@@ -4,6 +4,7 @@ import sys
 import MySQLdb
 import datetime
 import math
+#导入config设置
 sys.path.append("etc")
 import config as global_config
 
