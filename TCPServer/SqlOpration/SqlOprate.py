@@ -112,11 +112,14 @@ def sqlGetUnpnhisConnection(key):
 #unpn 操作
 def sqlSelect_ep(cursor):
   try:
+    ret_count = None
     if cursor:
-      sql='select epid from ep'
-      count = cursor.execute(sql)
-      return count
-    return None
+      sql='select count(epid) from ep'
+      cursor.execute(sql)
+      ret_count = cursor.fetchone()[0]
+
+    return ret_count
+
   except MySQLdb.Error,e:
     log.err()
 
@@ -131,11 +134,12 @@ def sqlDelete_gps(cursor):
 #清空alm并把id字段数字重置
 def sqlDelete_alm(cursor):
     try:
-        if cursor:
-            sql='truncate table alm'
-            cursor.execute(sql)
+      if cursor:
+        sql='truncate table alm'
+        cursor.execute(sql)
     except MySQLdb.Error,e:
-        log.err()
+      log.err()
+
 #插入ep表
 def sqlInsert_ep(key,value):
     try:
@@ -157,6 +161,7 @@ def sqlInsert_ep(key,value):
       return -1
     except MySQLdb.Error,e:
       log.err()
+
 #插入epstat
 def sqlInsert_epstat(key,value):
     try:
