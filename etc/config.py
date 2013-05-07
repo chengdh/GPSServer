@@ -13,49 +13,48 @@ dic={}
 gpsTableClearTime=1
 almTableClearTime=1
 #------------------------------------------------------------------------#
-dic['simple_factory']={ 'serverPort':5010,
+dic['simple_factory']={
     'factory': "simple_factory.SimpleFactory.SimpleFactory()",
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
     'db':'unpn',
     'unpn_history':'unpnhis',
-    'enable':True}
+    }
 
 
-dic['TianHe']={ 'serverPort':5010,
+dic['TianHe']={
     'factory': "TianHeServerFactory.TianHeFactory()",
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
     'db':'unpn',
     'unpn_history':'unpnhis',
-    'enable':True}
+    }
 
-dic['test']={ 'serverPort':6000,
+dic['test']={
     'factory': "TianHeServerFactory.TianHeFactory()",
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
     'db':'unpn_test',
     'unpn_history':'testhis',
-    'enable':True}
-'''
+    }
 
-dic['YouWei']={ 'serverPort':6969,
-    'factory':YouWeiServerFactory.YouWeiFactory(),
+dic['YouWei']={
+    'factory': "YouWeiServerFactory.YouWeiFactory()",
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
     'db':'myPythonServerTestdb',
     'unpn_history':'unpnhis',
-    'enable':False}
-dic['Yaxun']={ 'serverPort':9008,
-    'factory':YaxunServerFactory.YaxunFactory(),
+    }
+
+dic['Yaxun']={
+    'factory': "YaxunServerFactory.YaxunFactory()",
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
     'db':'myPythonServerTestdb',
     'unpn_history':'unpnhis',
-    'enable':True}
-'''
+    }
