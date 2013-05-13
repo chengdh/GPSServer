@@ -38,7 +38,7 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
         self.factory.numProtocols = self.factory.numProtocols+1
         log.msg(self.factory.numProtocols)
         #设置超时
-        self.timeout_deferred = reactor.callLater(30, self.timeout)
+        self.timeout_deferred = reactor.callLater(300, self.timeout)
         connected=True
     
     def dataReceived(self, data):
@@ -64,7 +64,9 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
             self.binaryCommandReceived(data)
         else:
             pass
+
     def timeout(self):
+        log.msg("timeout")
         self.transport.loseConnection()
     
     def connectionLost(self, reason):
