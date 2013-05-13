@@ -65,15 +65,15 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
         else:
             pass
     def timeout(self):
-        if self.epidCurrent:
-            log.msg(self.epidCurrent+"--timeout")
-            now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
-            value=(now,self.epidCurrent)
-            SqlOprate.sqlUpdate_epstatLost(self.factory.factoryKey,value)
         self.transport.loseConnection()
     
     def connectionLost(self, reason):
         log.msg("connectionLost")
+        if self.epidCurrent:
+            now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
+            value=(now,self.epidCurrent)
+            SqlOprate.sqlUpdate_epstatLost(self.factory.factoryKey,value)
+   
         if self.factory.devepid.get(self.epidCurrent) == self:
             del self.factory.devepid[self.epidCurrent]
         
