@@ -70,7 +70,7 @@ class TianHeProtocol(protocol.Protocol, basic._PauseableMixin, policies.TimeoutM
         self.transport.loseConnection()
     
     def connectionLost(self, reason):
-        log.msg("connectionLost")
+        log.msg("connectionLost" + reason.getErrorMessage())
         if self.epidCurrent:
             now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
             value=(now,self.epidCurrent)
