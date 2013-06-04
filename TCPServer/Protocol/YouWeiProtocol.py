@@ -76,6 +76,7 @@ class YouWeiProtocol(protocol.Protocol):
             self.timeout_deferred.cancel()
             del self.timeout_deferred
         
+        now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
         value=(now,self.epidCurrent)
         SqlOprate.sqlUpdate_epstatLost(self.factory.factoryKey,value)
         self.factory.numProtocols = self.factory.numProtocols-1
