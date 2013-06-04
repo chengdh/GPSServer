@@ -72,7 +72,7 @@ class YouWeiProtocol(protocol.Protocol):
         if self.factory.devepid.get(self.epidCurrent) == self:
             del self.factory.devepid[self.epidCurrent]
         
-        if self.timeout_deferred.active():
+        if self.timeout_deferred:  
             self.timeout_deferred.cancel()
             del self.timeout_deferred
         
