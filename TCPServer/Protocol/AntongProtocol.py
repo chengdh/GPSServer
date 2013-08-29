@@ -3,11 +3,10 @@ from twisted.internet import protocol, reactor
 from twisted.python import log
 import MySQLdb
 import datetime
-import struct
-from SqlOpration import SqlOprate 
 import random
 import struct
 import time
+from SqlOpration import SqlOprate 
 
 class AntongProtocol(protocol.Protocol):
     #databuffer为缓冲区
