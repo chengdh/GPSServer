@@ -22,9 +22,28 @@ dic['simple_factory']={
     'unpn_history':'unpnhis',
     }
 
-
+#天禾协议
 dic['TianHe']={
     'factory': "TianHeServerFactory.TianHeFactory()",
+    'mysqlHost':'localhost',
+    'mysqlUser':'root',
+    'mysqlPasswd':'antongroot',
+    'db':'unpn',
+    'unpn_history':'unpnhis',
+    }
+
+#有为协议
+dic['YouWei']={
+    'factory': "YouWeiServerFactory.YouWeiFactory()",
+    'mysqlHost':'localhost',
+    'mysqlUser':'root',
+    'mysqlPasswd':'antongroot',
+    'db':'unpn',
+    'unpn_history':'unpnhis',
+    }
+#安通农机终端协议
+dic['Antong']={
+    'factory': "AntongServerFactory.AntongFactory()",
     'mysqlHost':'localhost',
     'mysqlUser':'root',
     'mysqlPasswd':'antongroot',
@@ -41,20 +60,3 @@ dic['test']={
     'unpn_history':'testhis',
     }
 
-dic['YouWei']={
-    'factory': "YouWeiServerFactory.YouWeiFactory()",
-    'mysqlHost':'localhost',
-    'mysqlUser':'root',
-    'mysqlPasswd':'antongroot',
-    'db':'myPythonServerTestdb',
-    'unpn_history':'unpnhis',
-    }
-
-dic['Yaxun']={
-    'factory': "YaxunServerFactory.YaxunFactory()",
-    'mysqlHost':'localhost',
-    'mysqlUser':'root',
-    'mysqlPasswd':'antongroot',
-    'db':'myPythonServerTestdb',
-    'unpn_history':'unpnhis',
-    }

@@ -10,5 +10,3 @@ class TianHeFactory(SuperFactory):
     def buildProtocol(self, addr):
         return TianHeProtocol(self)
 
-
-

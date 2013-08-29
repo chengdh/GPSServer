@@ -32,6 +32,7 @@ else
 	NAMENO=$NAME
 fi
 
+echo -n "Stoping $HOME ... "
 PIDFILE=$RUNDIR/$NAMENO.pid
 LOGFILE=$LOGDIR/$NAMENO.log
 
