@@ -72,6 +72,7 @@ class AntongProtocol(protocol.Protocol):
         log.msg("frame no=%s" % repr(frame_no))
 
         if frame_no == '\x20':
+          log.msg('DS_LOGIN')
           epid,=struct.unpack('i',epid_no)
           self.epidCurrent =str(epid)
           log.msg("this is apply login new %s" %epid )
@@ -91,11 +92,17 @@ class AntongProtocol(protocol.Protocol):
         if frame_no == '\x01':
           log.msg('DS_INFO')
           log.msg('this is sended GPS info %s' % repr(data))
+          #发送完成标志确认
+          Finish_flag_data="\x7e\xfe\x13\x58\x04\x00\x10\x00\x00\x00\x0d"
+          self.transport.write(finish_flag_data)
+
 
         if frame_no == '\x24':
+          log.msg('DS_SET_HEART')
           log.msg('this is set heart,Send information to start')
 
         if frame_no == '\x21':
+          log.msg('DS_GPS')
           Finish_data = data[-11:]
           Finish = Finish_data[3]
           log.msg('this is sended GPS info %s' % repr(data))
@@ -110,7 +117,7 @@ class AntongProtocol(protocol.Protocol):
           log.msg('parse gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
                     
           if Finish =='\x26':
-            log.msg('')
+            log.msg('DS_FINISH')
             Finish_flag_data="\x7e\xfe\x13\x58\x04\x00\x10\x00\x00\x00\x0d"
             self.transport.write(Finish_flag_data)
             log.msg('this is epid : %s Finish flag info = %s' % (self.epidCurrent,repr(Finish_flag_data)))
