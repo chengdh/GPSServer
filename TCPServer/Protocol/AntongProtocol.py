@@ -6,7 +6,7 @@ import datetime
 import random
 import struct
 import time
-from SqlOpration import SqlOprate 
+from TCPServer.SqlOpration import SqlOprate 
 
 class AntongProtocol(protocol.Protocol):
     #databuffer为缓冲区
