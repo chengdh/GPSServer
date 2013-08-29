@@ -79,9 +79,10 @@ class AntongProtocol(protocol.Protocol):
           utc_time = struct.pack('<i', int(time.time()))
           accept_login_data=''.join([
             "\x7e\xfe",
-            "\x13\x40",
+            "\x14\x40",
+            "\x18\x00",
             utc_time,
-            'antongdevice',
+            'antong',
             'welcome',
             "\x0d",
             ])
