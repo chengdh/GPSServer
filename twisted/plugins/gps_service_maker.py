@@ -5,7 +5,7 @@ from twisted.python import usage
 from twisted.plugin import IPlugin
 from twisted.application.service import IServiceMaker
 from twisted.application import internet
-from TCPServer.Factory import simple_factory,TianHeServerFactory,YouWeiServerFactory
+from TCPServer.Factory import simple_factory,TianHeServerFactory,YouWeiServerFactory,AntongServerFactory
 #加入etc/目录
 sys.path.append("etc")
 import config as global_config
