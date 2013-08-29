@@ -87,6 +87,11 @@ class AntongProtocol(protocol.Protocol):
           self.transport.write(accept_login_data)
           log.msg('this is send info %s' % repr(accept_login_data))
 
+        #发送终端信息
+        if frame_no == '\x01':
+          log.msg('DS_INFO')
+          log.msg('this is sended GPS info %s' % repr(data))
+
         if frame_no == '\x24':
           log.msg('this is set heart,Send information to start')
 
