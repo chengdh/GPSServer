@@ -93,7 +93,7 @@ class AntongProtocol(protocol.Protocol):
           log.msg('DS_INFO')
           log.msg('this is sended GPS info %s' % repr(data))
           #发送完成标志确认
-          Finish_flag_data="\x7e\xfe\x13\x58\x04\x00\x10\x00\x00\x00\x0d"
+          finish_flag_data="\x7e\xfe\x13\x58\x04\x00\x10\x00\x00\x00\x0d"
           self.transport.write(finish_flag_data)
 
 
