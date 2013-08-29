@@ -80,8 +80,8 @@ class AntongProtocol(protocol.Protocol):
           accept_login_data=''.join([
             "\x7e\xfe",
             "\x13\x40",
-            "\x0b\x00",
             utc_time,
+            'antongdevice',
             'welcome',
             "\x0d",
             ])
