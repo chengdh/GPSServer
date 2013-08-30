@@ -120,10 +120,11 @@ class AntongProtocol(protocol.Protocol):
              }
 
           log.msg('parsed gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
+          finish_flag = data[-11:][3]
 
-        #DS_FINISH
-        if frame_no == '\x26':
-          log.msg('DS_FINISH')
-          finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
-          log.msg('SD_FINISH')
-          self.transport.write(finish_flag_data)
+          #DS_FINISH
+          if finish_flag == '\x26':
+            log.msg('DS_FINISH')
+            finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
+            log.msg('SD_FINISH')
+            self.transport.write(finish_flag_data)
