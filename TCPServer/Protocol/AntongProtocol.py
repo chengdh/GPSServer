@@ -80,16 +80,6 @@ class AntongProtocol(protocol.Protocol):
         'welcome',  #文本信息
         "\x0d",     #帧尾
         ])
-      #accept_login_data = ''.join([
-      #  "\x7e",     #帧头1 7E
-      #  "\xfe",     #帧头2 FE
-      #  "\x20",     #协议版本 
-      #  "\x40",     #帧号 0x40 接受登录
-      #  "\x06\x00", #帧数据长度
-      #  "\xb0\xd8\x2d\x51",
-      #  "\x00\x00",
-      #  "\x0d",
-      #  ])
       log.msg('SD_ACCEPT : %s' % repr(accept_login_data))
       self.transport.write(accept_login_data)
 
@@ -107,15 +97,18 @@ class AntongProtocol(protocol.Protocol):
           self.sd_accept()
 
         #发送终端信息
+        #DS_INFO
         if frame_no == '\x01':
           log.msg('DS_INFO: %s' % repr(data))
 
+        #设置心跳
+        #DS_SET_HEART
         if frame_no == '\x24':
           log.msg('DS_SET_HEART : %s' % repr(data))
 
+        #发送GPS信息
+        #DS_FINISH
         if frame_no == '\x21':
-          Finish_data = data[-11:]
-          Finish = Finish_data[3]
           log.msg('DS_GPS: %s' % repr(data))
           gps_info = {
             'utc_time' :data[6:10] ,
@@ -127,9 +120,10 @@ class AntongProtocol(protocol.Protocol):
              }
 
           log.msg('parsed gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
-                    
-          if Finish =='\x26':
-            log.msg('DS_FINISH')
-            Finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
-            self.transport.write(Finish_flag_data)
-            log.msg('this is epid : %s Finish flag info = %s' % (self.epidCurrent,repr(Finish_flag_data)))
+
+        #DS_FINISH
+        if frame_no == '\x26':
+          log.msg('DS_FINISH')
+          finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
+          log.msg('SD_FINISH')
+          self.transport.write(finish_flag_data)
