@@ -65,7 +65,7 @@ class AntongProtocol(protocol.Protocol):
         self.frameReceived(data)
 
     #登录确认
-    def sd_accept(self):
+    def sd_accept(self,data):
       utc_time = struct.pack('<i', int(time.time()))
       accept_login_data=''.join([
         "\x7e",     #帧头1 7E
@@ -80,7 +80,16 @@ class AntongProtocol(protocol.Protocol):
         'welcome',  #文本信息
         "\x0d",     #帧尾
         ])
-
+      accept_login_data = ''.join([
+        "\x7e",     #帧头1 7E
+        "\xfe",     #帧头2 FE
+        "\x13",     #协议版本 
+        "\x40",     #帧号 0x40 接受登录
+        "\x06\x00", #帧数据长度
+        "\xb0\xd8\x2d\x51",
+        "\x00\x00",
+        "\x0d",
+        ])
       log.msg('SD_ACCEPT : %s' % repr(accept_login_data))
       self.transport.write(accept_login_data)
 
@@ -88,8 +97,6 @@ class AntongProtocol(protocol.Protocol):
     def frameReceived(self,data):
         #判断帧号
         frame_no = data[3]
-        ver = data[2]
-        log.msg("version = %s" % ver)
 
         if frame_no == '\x20':
           epid_no = data[6:10] 
@@ -102,8 +109,6 @@ class AntongProtocol(protocol.Protocol):
         #发送终端信息
         if frame_no == '\x01':
           log.msg('DS_INFO: %s' % repr(data))
-          self.sd_accept()
-
 
         if frame_no == '\x24':
           log.msg('DS_SET_HEART : %s' % repr(data))
