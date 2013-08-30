@@ -65,7 +65,7 @@ class AntongProtocol(protocol.Protocol):
         self.frameReceived(data)
 
     #登录确认
-    def sd_accept(self,data):
+    def sd_accept(self):
       utc_time = struct.pack('<i', int(time.time()))
       accept_login_data=''.join([
         "\x7e",     #帧头1 7E
