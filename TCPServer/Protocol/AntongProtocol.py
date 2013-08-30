@@ -70,7 +70,6 @@ class AntongProtocol(protocol.Protocol):
         log.msg("DS =%s" % repr(data))
 
         if frame_no == '\x20':
-          log.msg('DS_LOGIN')
           epid_no = data[6:10] 
           epid,=struct.unpack('i',epid_no)
           self.epidCurrent =str(epid)
@@ -81,9 +80,9 @@ class AntongProtocol(protocol.Protocol):
             "\xfe",     #帧头2 FE
             "\x14",     #协议版本 
             "\x40",     #帧号 0x40 接受登录
-            "\x12\x00", #帧数据长度
+            "\x13\x00", #帧数据长度
             utc_time,   #utctime uint32
-            '\x05',     #终端名称长度    
+            '\x06',     #终端名称长度    
             'antong'    #终端名称
             '\x07'      #文本信息长度
             'welcome',  #文本信息
@@ -91,7 +90,7 @@ class AntongProtocol(protocol.Protocol):
             ])
 
           self.transport.write(accept_login_data)
-          log.msg('this is send info %s' % repr(accept_login_data))
+          log.msg('SD_ACCEPT %s' % repr(accept_login_data))
 
         #发送终端信息
         if frame_no == '\x01':
