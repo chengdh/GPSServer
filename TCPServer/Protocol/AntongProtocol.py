@@ -70,7 +70,7 @@ class AntongProtocol(protocol.Protocol):
       accept_login_data=''.join([
         "\x7e",     #帧头1 7E
         "\xfe",     #帧头2 FE
-        "\x14",     #协议版本 
+        "\x13",     #协议版本 
         "\x40",     #帧号 0x40 接受登录
         "\x13\x00", #帧数据长度
         utc_time,   #utctime uint32
@@ -81,13 +81,15 @@ class AntongProtocol(protocol.Protocol):
         "\x0d",     #帧尾
         ])
 
-      log.msg('SD_ACCEPT %s' % repr(accept_login_data))
+      log.msg('SD_ACCEPT : %s' % repr(accept_login_data))
       self.transport.write(accept_login_data)
 
 
     def frameReceived(self,data):
         #判断帧号
         frame_no = data[3]
+        ver = data[2]
+        log.msg("version = %s" % ver)
 
         if frame_no == '\x20':
           epid_no = data[6:10] 
