@@ -64,38 +64,43 @@ class AntongProtocol(protocol.Protocol):
          
         self.frameReceived(data)
 
+    #登录确认
+    def sd_accept(self):
+      utc_time = struct.pack('<i', int(time.time()))
+      accept_login_data=''.join([
+        "\x7e",     #帧头1 7E
+        "\xfe",     #帧头2 FE
+        "\x14",     #协议版本 
+        "\x40",     #帧号 0x40 接受登录
+        "\x13\x00", #帧数据长度
+        utc_time,   #utctime uint32
+        '\x06',     #终端名称长度    
+        'antong'    #终端名称
+        '\x07'      #文本信息长度
+        'welcome',  #文本信息
+        "\x0d",     #帧尾
+        ])
+
+      log.msg('SD_ACCEPT %s' % repr(accept_login_data))
+      self.transport.write(accept_login_data)
+
+
     def frameReceived(self,data):
         #判断帧号
         frame_no = data[3]
-        log.msg("DS =%s" % repr(data))
 
         if frame_no == '\x20':
           epid_no = data[6:10] 
           epid,=struct.unpack('i',epid_no)
           self.epidCurrent =str(epid)
-          log.msg("DS_LOGIN %s" %epid )
-          utc_time = struct.pack('<i', int(time.time()))
-          accept_login_data=''.join([
-            "\x7e",     #帧头1 7E
-            "\xfe",     #帧头2 FE
-            "\x14",     #协议版本 
-            "\x40",     #帧号 0x40 接受登录
-            "\x13\x00", #帧数据长度
-            utc_time,   #utctime uint32
-            '\x06',     #终端名称长度    
-            'antong'    #终端名称
-            '\x07'      #文本信息长度
-            'welcome',  #文本信息
-            "\x0d",     #帧尾
-            ])
-
-          self.transport.write(accept_login_data)
-          log.msg('SD_ACCEPT %s' % repr(accept_login_data))
+          log.msg("DS_LOGIN : %s" % repr(data) )
+          log.msg("DS_LOGIN epid =  %s" %epid )
+          sd_accept()
 
         #发送终端信息
         if frame_no == '\x01':
-          log.msg('DS_INFO')
           log.msg('DS_INFO: %s' % repr(data))
+          sd_accept()
 
 
         if frame_no == '\x24':
