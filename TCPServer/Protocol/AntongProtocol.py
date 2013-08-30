@@ -70,7 +70,7 @@ class AntongProtocol(protocol.Protocol):
       accept_login_data=''.join([
         "\x7e",     #帧头1 7E
         "\xfe",     #帧头2 FE
-        "\x13",     #协议版本 
+        "\x20",     #协议版本 
         "\x40",     #帧号 0x40 接受登录
         "\x13\x00", #帧数据长度
         utc_time,   #utctime uint32
@@ -83,7 +83,7 @@ class AntongProtocol(protocol.Protocol):
       accept_login_data = ''.join([
         "\x7e",     #帧头1 7E
         "\xfe",     #帧头2 FE
-        "\x13",     #协议版本 
+        "\x20",     #协议版本 
         "\x40",     #帧号 0x40 接受登录
         "\x06\x00", #帧数据长度
         "\xb0\xd8\x2d\x51",
