@@ -16,8 +16,6 @@ def convert_lat_lon(v):
     """
     return round(int(v/1000000) + float(v % 1000000) / 600000, 6)
 
-
-
 class AntongProtocol(protocol.Protocol):
     #databuffer为缓冲区
     databuffer = ''
