@@ -80,16 +80,16 @@ class AntongProtocol(protocol.Protocol):
         'welcome',  #文本信息
         "\x0d",     #帧尾
         ])
-      accept_login_data = ''.join([
-        "\x7e",     #帧头1 7E
-        "\xfe",     #帧头2 FE
-        "\x20",     #协议版本 
-        "\x40",     #帧号 0x40 接受登录
-        "\x06\x00", #帧数据长度
-        "\xb0\xd8\x2d\x51",
-        "\x00\x00",
-        "\x0d",
-        ])
+      #accept_login_data = ''.join([
+      #  "\x7e",     #帧头1 7E
+      #  "\xfe",     #帧头2 FE
+      #  "\x20",     #协议版本 
+      #  "\x40",     #帧号 0x40 接受登录
+      #  "\x06\x00", #帧数据长度
+      #  "\xb0\xd8\x2d\x51",
+      #  "\x00\x00",
+      #  "\x0d",
+      #  ])
       log.msg('SD_ACCEPT : %s' % repr(accept_login_data))
       self.transport.write(accept_login_data)
 
