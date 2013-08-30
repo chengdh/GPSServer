@@ -95,12 +95,12 @@ class AntongProtocol(protocol.Protocol):
           self.epidCurrent =str(epid)
           log.msg("DS_LOGIN : %s" % repr(data) )
           log.msg("DS_LOGIN epid =  %s" %epid )
-          sd_accept()
+          self.sd_accept()
 
         #发送终端信息
         if frame_no == '\x01':
           log.msg('DS_INFO: %s' % repr(data))
-          sd_accept()
+          self.sd_accept()
 
 
         if frame_no == '\x24':
