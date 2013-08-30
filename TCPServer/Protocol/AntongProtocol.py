@@ -67,54 +67,45 @@ class AntongProtocol(protocol.Protocol):
     def frameReceived(self,data):
         #判断帧号
         frame_no = data[3]
-        #取得终端设备号
-        epid_no = data[6:10] 
-        log.msg("frame no=%s" % repr(frame_no))
+        log.msg("DS =%s" % repr(data))
 
         if frame_no == '\x20':
           log.msg('DS_LOGIN')
+          epid_no = data[6:10] 
           epid,=struct.unpack('i',epid_no)
           self.epidCurrent =str(epid)
-          log.msg("this is apply login new %s" %epid )
+          log.msg("DS_LOGIN %s" %epid )
           utc_time = struct.pack('<i', int(time.time()))
           accept_login_data=''.join([
-            "\x7e\xfe",
-            "\x13\x40",
-            "\x18\x00",
-            utc_time,
-            'antong',
-            'welcome',
-            "\x0d",
+            "\x7e",     #帧头1 7E
+            "\xfe",     #帧头2 FE
+            "\x14",     #协议版本 
+            "\x40",     #帧号 0x40 接受登录
+            "\x12\x00", #帧数据长度
+            utc_time,   #utctime uint32
+            '\x05',     #终端名称长度    
+            'antong'    #终端名称
+            '\x07'      #文本信息长度
+            'welcome',  #文本信息
+            "\x0d",     #帧尾
             ])
-          accept_login_data = ''.join([
-            "\x7e\xfe\x13\x40",
-            "\x06\x00",
-            "\xb0\xd8",
-            "\x2d\x51",
-            "\x00\x00",
-            "\x0d"
-            ])
+
           self.transport.write(accept_login_data)
           log.msg('this is send info %s' % repr(accept_login_data))
 
         #发送终端信息
         if frame_no == '\x01':
           log.msg('DS_INFO')
-          log.msg('this is sended GPS info %s' % repr(data))
-          #发送完成标志确认
-          finish_flag_data="\x7e\xfe\x13\x58\x04\x00\x10\x00\x00\x00\x0d"
-          self.transport.write(finish_flag_data)
+          log.msg('DS_INFO: %s' % repr(data))
 
 
         if frame_no == '\x24':
-          log.msg('DS_SET_HEART')
-          log.msg('this is set heart,Send information to start')
+          log.msg('DS_SET_HEART : %s' % repr(data))
 
         if frame_no == '\x21':
-          log.msg('DS_GPS')
           Finish_data = data[-11:]
           Finish = Finish_data[3]
-          log.msg('this is sended GPS info %s' % repr(data))
+          log.msg('DS_GPS: %s' % repr(data))
           gps_info = {
             'utc_time' :data[6:10] ,
             'lat' :     data[10:14], 
@@ -123,7 +114,8 @@ class AntongProtocol(protocol.Protocol):
             'speed':    data[20:22],
             'milles' :  data[22:26],
              }
-          log.msg('parse gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
+
+          log.msg('parsed gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
                     
           if Finish =='\x26':
             log.msg('DS_FINISH')
