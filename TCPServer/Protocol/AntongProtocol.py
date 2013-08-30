@@ -8,6 +8,16 @@ import struct
 import time
 from TCPServer.SqlOpration import SqlOprate 
 
+def convert_lat_lon(v):
+    """
+    转换经度纬度
+    ddmmmmmm --> d
+    要求 v 是整数
+    """
+    return round(int(v/1000000) + float(v % 1000000) / 600000, 6)
+
+
+
 class AntongProtocol(protocol.Protocol):
     #databuffer为缓冲区
     databuffer = ''
@@ -46,6 +56,12 @@ class AntongProtocol(protocol.Protocol):
         连接丢失
         '''
         log.msg("connectionLost")
+
+        if self.epidCurrent:
+            now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
+            value=(now,self.epidCurrent)
+            SqlOprate.sqlUpdate_epstatLost(self.factory.factoryKey,value)
+ 
         if self.factory.devepid.get(self.epidCurrent) == self:
             del self.factory.devepid[self.epidCurrent]
         
@@ -120,3 +136,19 @@ class AntongProtocol(protocol.Protocol):
             finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
             log.msg('SD_FINISH')
             self.transport.write(finish_flag_data)
+
+          #更新数据库
+          #插入ep表
+          #epid,devtype,bankno,name,dept_id,creator_id
+          key = devtype =  self.factory.factoryKey
+          v_1 = ('NULL',self.epidCurrent,devtype)
+          now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
+
+          SqlOprate.sqlInsert_ep(key,v_1)
+          #插入gps表
+          #('NULL',epid,now,t,jingdu,weidu,direction,speedD,0,state)
+          v_2 = ('NULL',self.epidCurrent,now,now,convert_lat_lon(lat),convert_lat_lon(lon),direction,speed,0,'NULL')
+          SqlOprate.sqlInsert_gps(key,v_2)
+          #插入或更新epstat表
+          v_3 = v_2 + v_2[2:]
+          SqlOprate.sqlInsert_epstat(key,v_3)
