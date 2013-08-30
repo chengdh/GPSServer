@@ -130,6 +130,6 @@ class AntongProtocol(protocol.Protocol):
                     
           if Finish =='\x26':
             log.msg('DS_FINISH')
-            Finish_flag_data="\x7e\xfe\x13\x58\x04\x00\x10\x00\x00\x00\x0d"
+            Finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
             self.transport.write(Finish_flag_data)
             log.msg('this is epid : %s Finish flag info = %s' % (self.epidCurrent,repr(Finish_flag_data)))
