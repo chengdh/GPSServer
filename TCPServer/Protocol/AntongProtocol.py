@@ -110,7 +110,7 @@ class AntongProtocol(protocol.Protocol):
         #DS_FINISH
         if frame_no == '\x21':
           log.msg('DS_GPS: %s' % repr(data))
-          gps_info = [utc_time,lat,lon,direction.speed,miles] = struct.unpack('iiihhi',data[6:26])
+          gps_info = [utc_time,lat,lon,direction,speed,miles] = struct.unpack('iiihhi',data[6:26])
           log.msg('parsed gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
 
           #DS_FINISH
