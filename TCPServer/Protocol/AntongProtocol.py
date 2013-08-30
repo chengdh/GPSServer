@@ -79,12 +79,20 @@ class AntongProtocol(protocol.Protocol):
           utc_time = struct.pack('<i', int(time.time()))
           accept_login_data=''.join([
             "\x7e\xfe",
-            "\x14\x40",
+            "\x13\x40",
             "\x18\x00",
             utc_time,
             'antong',
             'welcome',
             "\x0d",
+            ])
+          accept_login_data = ''.join([
+            "\x7e\xfe\x13\x40",
+            "\x06\x00",
+            "\xb0\xd8",
+            "\x2d\x51",
+            "\x00\x00",
+            "\x0d"
             ])
           self.transport.write(accept_login_data)
           log.msg('this is send info %s' % repr(accept_login_data))
