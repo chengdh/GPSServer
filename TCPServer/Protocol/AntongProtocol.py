@@ -148,7 +148,8 @@ class AntongProtocol(protocol.Protocol):
           #epid,devtype,bankno,name,dept_id,creator_id
           key = devtype =  self.factory.factoryKey
           v_1 = ('NULL',self.epidCurrent,devtype)
-          now = (datetime.datetime.now() + TD_8HOUR).strftime("%y-%m-%d %H:%M:%S")
+          #now = (datetime.datetime.now() + TD_8HOUR).strftime("%y-%m-%d %H:%M:%S")
+          now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
 
           SqlOprate.sqlInsert_ep(key,v_1)
           #插入gps表
@@ -176,7 +177,8 @@ class AntongProtocol(protocol.Protocol):
         self.transport.write(finish_flag_data)
 
       key = self.factory.factoryKey
-      now = (datetime.datetime.now() + TD_8HOUR).strftime("%y-%m-%d %H:%M:%S")
+      #now = (datetime.datetime.now() + TD_8HOUR).strftime("%y-%m-%d %H:%M:%S")
+      now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
       #4:维修报警   5:油料报警
       value = ('NULL',self.epidCurrent,now,'NULL',5,'油料报警',now,convert_lat_lon(lat),convert_lat_lon(lon),direction,speed/10.0,0,'')
       SqlOprate.sqlInsert_alm(key,value)
