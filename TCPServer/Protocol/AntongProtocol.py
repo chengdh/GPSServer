@@ -131,6 +131,7 @@ class AntongProtocol(protocol.Protocol):
         #DS_FINISH
         if frame_no == '\x21':
           log.msg('DS_GPS: %s' % repr(data))
+          #纬度:lat 经度:lon
           gps_info = [utc_time,lat,lon,direction,speed,miles] = struct.unpack('iiihhi',data[6:26])
           log.msg('parsed gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
 
@@ -152,7 +153,7 @@ class AntongProtocol(protocol.Protocol):
           SqlOprate.sqlInsert_ep(key,v_1)
           #插入gps表
           #('NULL',epid,now,t,jingdu,weidu,direction,speedD,0,state)
-          v_2 = ('NULL',self.epidCurrent,now,now,convert_lat_lon(lat),convert_lat_lon(lon),direction,speed,0,'NULL')
+          v_2 = ('NULL',self.epidCurrent,now,now,convert_lat_lon(lat),convert_lat_lon(lon),direction,speed/10.0,0,'NULL')
           SqlOprate.sqlInsert_gps(key,v_2)
           #插入或更新epstat表
           v_3 = v_2 + v_2[2:]
