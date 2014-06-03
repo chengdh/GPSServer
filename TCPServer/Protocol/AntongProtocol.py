@@ -8,6 +8,8 @@ import struct
 import time
 from TCPServer.SqlOpration import SqlOprate 
 
+TD_8HOUR = datetime.timedelta(0, 28800)
+
 def convert_lat_lon(v):
     """
     转换经度纬度
@@ -120,6 +122,11 @@ class AntongProtocol(protocol.Protocol):
         if frame_no == '\x24':
           log.msg('DS_SET_HEART : %s' % repr(data))
 
+        #报警信息
+        #DS_ALERT
+        if frame_no == '\x2a':
+          process_alert(data)
+
         #发送GPS信息
         #DS_FINISH
         if frame_no == '\x21':
@@ -140,7 +147,7 @@ class AntongProtocol(protocol.Protocol):
           #epid,devtype,bankno,name,dept_id,creator_id
           key = devtype =  self.factory.factoryKey
           v_1 = ('NULL',self.epidCurrent,devtype)
-          now = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
+          now = (datetime.datetime.now() + TD_8HOUR).strftime("%y-%m-%d %H:%M:%S")
 
           SqlOprate.sqlInsert_ep(key,v_1)
           #插入gps表
@@ -150,3 +157,25 @@ class AntongProtocol(protocol.Protocol):
           #插入或更新epstat表
           v_3 = v_2 + v_2[2:]
           SqlOprate.sqlInsert_epstat(key,v_3)
+
+    #处理报警信息
+    def process_alert(data):
+      log.msg('DS_ALERT: %s' % repr(data))
+      #信息依次为:
+      #<终端ID><告警类型> <UTC 时间> <纬度> <经度> <方向> <速度> <累计里程><告警附加信息>
+      gps_info = [alert_type,utc_time,lat,lon,direction,speed,miles] = struct.unpack('hiiihhi',data[6:28])
+      log.msg('parsed gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
+
+      #DS_FINISH
+      finish_flag = data[-11:][3]
+      if finish_flag == '\x26':
+        log.msg('DS_FINISH')
+        finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
+        log.msg('SD_FINISH')
+        self.transport.write(finish_flag_data)
+
+      key = self.factory.factoryKey
+      now = (datetime.datetime.now() + TD_8HOUR).strftime("%y-%m-%d %H:%M:%S")
+      #4:维修报警   5:油料报警
+      value = ('NULL',self.epidCurrent,now,'NULL',5,'油料报警',now,convert_lat_lon(lat),convert_lat_lon(lon),direction,speed/10.0,0,'')
+      SqlOprate.sqlInsert_alm(key,value)

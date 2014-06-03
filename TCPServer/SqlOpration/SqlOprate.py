@@ -207,7 +207,8 @@ def sqlInsert_alm(key,value):
         if abs((now-LastAlmTime).days)>=almClearDay:
           sqlDelete_alm(cursor)
           LastAlmTime=now
-        sql="insert into alm values(%s,%s,'%s',%s,%s,'%s','%s',%s,%s,%s,%s,%s,'%s')"%value
+
+        sql="insert into alm(epid,`time`,reptime,`type`,data,gpstime,longitude,latitude,direction,speed,mileage,flags)  values(%s,%s,'%s',%s,%s,'%s','%s',%s,%s,%s,%s,%s,'%s')" % value
         cursor.execute(sql)
         conn.commit()
 
