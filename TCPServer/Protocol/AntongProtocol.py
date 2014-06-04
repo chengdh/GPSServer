@@ -161,12 +161,12 @@ class AntongProtocol(protocol.Protocol):
           SqlOprate.sqlInsert_epstat(key,v_3)
 
     #处理报警信息
-    def process_alert(data):
+    def process_alert(self,data):
       log.msg('DS_ALERT: %s' % repr(data))
       #信息依次为:
       #<终端ID><告警类型> <UTC 时间> <纬度> <经度> <方向> <速度> <累计里程><告警附加信息>
       gps_info = [alert_type,utc_time,lat,lon,direction,speed,miles] = struct.unpack('hiiihhi',data[6:28])
-      log.msg('parsed gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
+      log.msg('parsed DS_ALERT epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
 
       #DS_FINISH
       finish_flag = data[-11:][3]
