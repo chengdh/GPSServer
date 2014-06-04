@@ -104,6 +104,7 @@ class AntongProtocol(protocol.Protocol):
         #判断帧号
         frame_no = data[3]
 
+        log.msg("FRAME_NO : %s" % repr(frame_no) )
         if frame_no == '\x20':
           epid_no = data[6:10] 
           epid,=struct.unpack('i',epid_no)
