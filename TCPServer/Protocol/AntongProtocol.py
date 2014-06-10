@@ -136,13 +136,6 @@ class AntongProtocol(protocol.Protocol):
           gps_info = [utc_time,lat,lon,direction,speed,miles] = struct.unpack('iiihhi',data[6:26])
           log.msg('parsed gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
 
-          #DS_FINISH
-          finish_flag = data[-11:][3]
-          if finish_flag == '\x26':
-            log.msg('DS_FINISH')
-            finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
-            log.msg('SD_FINISH')
-            self.transport.write(finish_flag_data)
 
           #更新数据库
           #插入ep表
@@ -160,6 +153,14 @@ class AntongProtocol(protocol.Protocol):
           #插入或更新epstat表
           v_3 = v_2 + v_2[2:]
           SqlOprate.sqlInsert_epstat(key,v_3)
+          #DS_FINISH
+
+        if frame_no == '\x26':
+          log.msg('DS_FINISH')
+          finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
+          log.msg('SD_FINISH')
+          self.transport.write(finish_flag_data)
+
 
     #处理报警信息
     def process_alert(self,data):
