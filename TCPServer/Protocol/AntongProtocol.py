@@ -86,6 +86,7 @@ class AntongProtocol(protocol.Protocol):
       '''
       frames = data.split('\x7e\xfe')
       #去除一个空白帧
+      log.msg('parse frame : %s' % repr(frames))
       for frame in frames:
         frameReceived(frame)
 
