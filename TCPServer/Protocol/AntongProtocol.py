@@ -179,7 +179,9 @@ class AntongProtocol(protocol.Protocol):
       log.msg('DS_ALERT: %s' % repr(data))
       #信息依次为:
       #<终端ID><告警类型> <UTC 时间> <纬度> <经度> <方向> <速度> <累计里程><告警附加信息>
-      gps_info = [alert_type,utc_time,lat,lon,direction,speed,miles] = struct.unpack('biiihhi',data[4:25])
+      alert_type = data[4]
+      log.msg('alert_type :  %s' % alert_type)
+      gps_info = [utc_time,lat,lon,direction,speed,miles] = struct.unpack('iiihhi',data[5:25])
       log.msg('parsed DS_ALERT epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
 
       key = self.factory.factoryKey
