@@ -88,7 +88,7 @@ class AntongProtocol(protocol.Protocol):
       #去除一个空白帧
       log.msg('parse frame : %s' % repr(frames))
       for frame in frames:
-        frameReceived(frame)
+        self.frameReceived(frame)
 
 
     #登录确认
@@ -115,11 +115,11 @@ class AntongProtocol(protocol.Protocol):
         if not data:
           return
         #判断帧号
-        frame_no = data[3]
+        frame_no = data[1]
 
         log.msg("FRAME_NO : %s" % repr(frame_no) )
         if frame_no == '\x20':
-          epid_no = data[6:10] 
+          epid_no = data[4:8] 
           epid,=struct.unpack('i',epid_no)
           self.epidCurrent =str(epid)
           log.msg("DS_LOGIN : %s" % repr(data) )
@@ -145,7 +145,7 @@ class AntongProtocol(protocol.Protocol):
         if frame_no == '\x21':
           log.msg('DS_GPS: %s' % repr(data))
           #纬度:lat 经度:lon
-          gps_info = [utc_time,lat,lon,direction,speed,miles] = struct.unpack('iiihhi',data[6:26])
+          gps_info = [utc_time,lat,lon,direction,speed,miles] = struct.unpack('iiihhi',data[4:24])
           log.msg('parsed gps epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
 
 
@@ -179,16 +179,8 @@ class AntongProtocol(protocol.Protocol):
       log.msg('DS_ALERT: %s' % repr(data))
       #信息依次为:
       #<终端ID><告警类型> <UTC 时间> <纬度> <经度> <方向> <速度> <累计里程><告警附加信息>
-      gps_info = [alert_type,utc_time,lat,lon,direction,speed,miles] = struct.unpack('hiiihhi',data[6:28])
+      gps_info = [alert_type,utc_time,lat,lon,direction,speed,miles] = struct.unpack('hiiihhi',data[4:26])
       log.msg('parsed DS_ALERT epid: %s info = %s' % (self.epidCurrent,repr(gps_info)))
-
-      #DS_FINISH
-      finish_flag = data[-11:][3]
-      if finish_flag == '\x26':
-        log.msg('DS_FINISH')
-        finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
-        log.msg('SD_FINISH')
-        self.transport.write(finish_flag_data)
 
       key = self.factory.factoryKey
       #now = (datetime.datetime.now() + TD_8HOUR).strftime("%y-%m-%d %H:%M:%S")
