@@ -77,8 +77,18 @@ class AntongProtocol(protocol.Protocol):
         if self.timeout_deferred:
             self.timeout_deferred.cancel()
             self.timeout_deferred = reactor.callLater(self.timeOut, self.timeout)
-         
-        self.frameReceived(data)
+
+        self.parse_frame(data)
+
+    def parse_frame(self,data):
+      '''
+      根据帧数据格式,获取单独的帧
+      '''
+      frames = data.split('\x7e\xfe')
+      #去除一个空白帧
+      for frame in frames:
+        frameReceived(frame)
+
 
     #登录确认
     def sd_accept(self):
@@ -101,6 +111,8 @@ class AntongProtocol(protocol.Protocol):
 
 
     def frameReceived(self,data):
+        if not data:
+          return
         #判断帧号
         frame_no = data[3]
 
@@ -129,7 +141,6 @@ class AntongProtocol(protocol.Protocol):
           process_alert(data)
 
         #发送GPS信息
-        #DS_FINISH
         if frame_no == '\x21':
           log.msg('DS_GPS: %s' % repr(data))
           #纬度:lat 经度:lon
@@ -153,8 +164,8 @@ class AntongProtocol(protocol.Protocol):
           #插入或更新epstat表
           v_3 = v_2 + v_2[2:]
           SqlOprate.sqlInsert_epstat(key,v_3)
-          #DS_FINISH
 
+        #DS_FINISH
         if frame_no == '\x26':
           log.msg('DS_FINISH')
           finish_flag_data="\x7e\xfe\x20\x58\x04\x00\x10\x00\x00\x00\x0d"
