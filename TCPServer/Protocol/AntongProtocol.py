@@ -139,7 +139,7 @@ class AntongProtocol(protocol.Protocol):
         #报警信息
         #DS_ALERT
         if frame_no == '\x2a':
-          process_alert(data)
+          self.process_alert(data)
 
         #发送GPS信息
         if frame_no == '\x21':
